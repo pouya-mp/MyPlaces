@@ -14,7 +14,7 @@
         </item>
     </style>
     
-    <style name="CustomToolbar">
+    <style name="CustomToolbar" >
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:colorControlNormal">#FFFFFF</item>
     </style>
