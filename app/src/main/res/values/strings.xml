@@ -13,4 +13,9 @@
     <string name="goToSettingsMessage">It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings</string>
     <string name="goToSettings">GO TO SETTINGS</string>
     <string name="cancel">Cancel</string>
+    <string name="pleaseEnterTitle">Please enter title</string>
+    <string name="pleaseEnterDescription">Please enter description</string>
+    <string name="pleaseEnterDate">Please enter date</string>
+    <string name="pleaseSelectLocation">Please select location</string>
+    <string name="pleaseAddImage">Please add image</string>
 </resources>

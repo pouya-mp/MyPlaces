@@ -3,7 +3,6 @@ package com.pouyaa.myplaces
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.ContextWrapper
 import android.content.Intent
@@ -22,13 +21,13 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_add_place.*
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 class AddPlaceActivity : AppCompatActivity() {
 
-    lateinit var savedImageOnInternalStorage: Uri
-
+    private lateinit var savedImageOnInternalStorage: Uri
+    private var selectedPlaceLatitude: Double = 0.0
+    private var selectedPlaceLongitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +39,11 @@ class AddPlaceActivity : AppCompatActivity() {
 
         addDateEditText.setOnClickListener { PickDate(addDateEditText).selectDate(this) }
         addImageTextView.setOnClickListener { showChooseImageDialog() }
+        saveButton.setOnClickListener {
+            if (checkIsEmptyOnAddPlaceFields()) {
+                saveToDatabase()
+            }
+        }
 
 
     }
@@ -196,5 +200,59 @@ class AddPlaceActivity : AppCompatActivity() {
         private const val CAMERA = 2
         private const val IMAGE_DIRECTORY = "MyPlacesImages"
     }
+
+    private fun checkIsEmptyOnAddPlaceFields(): Boolean {
+        var result = false
+        when {
+
+            addTitleEditText.text.isNullOrEmpty() -> {
+                Toast.makeText(this, getString(R.string.pleaseEnterTitle), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            addDescriptionEditText.text.isNullOrEmpty() -> {
+                Toast.makeText(this, getString(R.string.pleaseEnterDescription), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            addDateEditText.text.isNullOrEmpty() -> {
+                Toast.makeText(this, getString(R.string.pleaseEnterDate), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            addLocationEditText.text.isNullOrEmpty() -> {
+                Toast.makeText(this, getString(R.string.pleaseSelectLocation), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            savedImageOnInternalStorage.toString().isEmpty() -> {
+                Toast.makeText(this, getString(R.string.pleaseAddImage), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                result = true
+            }
+        }
+        return result
+    }
+
+    private fun saveToDatabase() {
+        val myPlaceModel = PlaceModel(
+            0,
+            addTitleEditText.text.toString(),
+            savedImageOnInternalStorage.toString(),
+            addDescriptionEditText.text.toString(),
+            addDateEditText.text.toString(),
+            addLocationEditText.text.toString(),
+            selectedPlaceLatitude,
+            selectedPlaceLongitude
+        )
+
+
+        val dbHandler = DataBaseHandler(this)
+
+        val addPlace = dbHandler.addMyPlace(myPlaceModel)
+
+        if (addPlace > 0) {
+            Toast.makeText(this, "Saved Place Successfully", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+
 
 }
