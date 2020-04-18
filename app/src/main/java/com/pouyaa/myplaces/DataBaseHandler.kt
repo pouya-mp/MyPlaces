@@ -84,9 +84,9 @@ class DataBaseHandler(context: Context) :
     }
 
     companion object {
-        private const val DATABASE_VERSION = 1 // Database version
-        private const val DATABASE_NAME = "MyPlacesDatabase" // Database name
-        private const val TABLE_MY_PLACES = "MyPlacesTable" // Table Name
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "MyPlacesDatabase"
+        private const val TABLE_MY_PLACES = "MyPlacesTable"
 
         private const val KEY_ID = "_id"
         private const val KEY_TITLE = "title"

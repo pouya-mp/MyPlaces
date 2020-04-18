@@ -194,13 +194,6 @@ class AddPlaceActivity : AppCompatActivity() {
             }.show()
     }
 
-
-    companion object {
-        private const val GALLERY = 1
-        private const val CAMERA = 2
-        private const val IMAGE_DIRECTORY = "MyPlacesImages"
-    }
-
     private fun checkIsEmptyOnAddPlaceFields(): Boolean {
         var result = false
         when {
@@ -254,5 +247,9 @@ class AddPlaceActivity : AppCompatActivity() {
         }
     }
 
-
+    companion object {
+        private const val GALLERY = 1
+        private const val CAMERA = 2
+        private const val IMAGE_DIRECTORY = "MyPlacesImages"
+    }
 }
